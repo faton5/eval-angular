@@ -1,0 +1,95 @@
+<section class="intro">
+  <p>ORGANISATION PERSONNELLE</p>
+  <h1>Une chose à la fois.</h1>
+  <span>Ajoute tes tâches et avance sereinement.</span>
+  <span>Tu peux les modifier, les marquer comme terminées ou les supprimer.</span>
+</section>
+
+<section class="card">
+  <h2>Nouvelle tâche</h2>
+
+  <form (ngSubmit)="ajouter()">
+    <label>
+      Titre
+      <input name="titre" [(ngModel)]="titre" placeholder="Ex. Préparer la présentation">
+    </label>
+    @if (erreurTitre) {
+      <small class="error">{{ erreurTitre }}</small>
+    }
+
+    <label>
+      Description
+      <textarea name="description" [(ngModel)]="description" placeholder="Optionnel"></textarea>
+    </label>
+
+    <label>
+      Échéance
+      <input name="dateEcheance" type="date" [min]="dateDuJour()" [(ngModel)]="dateEcheance">
+    </label>
+    @if (erreurDate) {
+      <small class="error">{{ erreurDate }}</small>
+    }
+
+    <button class="primary" [disabled]="titre.trim().length < 3">Ajouter</button>
+  </form>
+</section>
+
+<section class="card">
+  <div class="ligne-titre">
+    <h2>Mes tâches</h2>
+    <span>{{ serviceTaches.taches().length }} tâche(s)</span>
+  </div>
+
+  <div class="filtres">
+    <input name="recherche" [(ngModel)]="recherche" placeholder="Rechercher">
+    <select name="filtre" [(ngModel)]="filtre">
+      <option value="toutes">Toutes</option>
+      <option value="afaire">À faire</option>
+      <option value="terminees">Terminées</option>
+    </select>
+  </div>
+
+  <p>{{ compterAFaire() }} à faire · {{ compterTerminees() }} terminée(s)</p>
+
+  @if (afficherTaches().length === 0) {
+    <p class="empty">Aucune tâche pour le moment.</p>
+  }
+
+  <ul class="taches">
+    @for (tache of afficherTaches(); track tache.identifiant) {
+      <li [class.terminee]="tache.terminee">
+        @if (idEnModification !== tache.identifiant) {
+          <div>
+            <strong>{{ tache.titre }}</strong>
+            @if (tache.description) {
+              <p>{{ tache.description }}</p>
+            }
+            @if (tache.dateEcheance) {
+              <small>Échéance : {{ tache.dateEcheance }}</small>
+            }
+          </div>
+
+          <div class="actions">
+            <label class="checkbox">
+              <input type="checkbox" [checked]="tache.terminee" (change)="terminer(tache)">
+              Fait
+            </label>
+            <button (click)="commencerModification(tache)">Modifier</button>
+            <button (click)="supprimer(tache)">Supprimer</button>
+          </div>
+        } @else {
+          <form class="edit-form" (ngSubmit)="enregistrer(tache)">
+            <input name="titreModifie" [(ngModel)]="tache.titre">
+            <textarea name="descriptionModifiee" [(ngModel)]="tache.description"></textarea>
+            <input name="dateModifiee" type="date" [min]="dateDuJour()" [(ngModel)]="tache.dateEcheance">
+
+            <div class="actions">
+              <button class="primary">Enregistrer</button>
+              <button type="button" (click)="idEnModification = ''">Annuler</button>
+            </div>
+          </form>
+        }
+      </li>
+    }
+  </ul>
+</section>

@@ -1,0 +1,12 @@
+<header>
+  <a routerLink="/">✓ Taskly</a>
+
+  <nav>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      Mes tâches
+    </a>
+    <a routerLink="/stats" routerLinkActive="active">Statistiques</a>
+  </nav>
+</header>
+
+<router-outlet></router-outlet>

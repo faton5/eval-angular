@@ -1,0 +1,28 @@
+<section class="intro">
+  <p>TON ACTIVITÉ</p>
+  <h1>Vue d'ensemble.</h1>
+  <span>Un résumé de tes tâches.</span>
+</section>
+
+<section class="card">
+  <h2>Statistiques</h2>
+
+  <div class="statistiques">
+    <div>
+      <strong>{{ serviceTaches.taches().length }}</strong>
+      <span>Total</span>
+    </div>
+    <div>
+      <strong>{{ compterAFaire() }}</strong>
+      <span>À faire</span>
+    </div>
+    <div>
+      <strong>{{ compterTerminees() }}</strong>
+      <span>Terminées</span>
+    </div>
+    <div>
+      <strong>{{ serviceTaches.taches().length ? (compterTerminees() / serviceTaches.taches().length * 100 | number:'1.0-0') : 0 }}%</strong>
+      <span>Progression</span>
+    </div>
+  </div>
+</section>
