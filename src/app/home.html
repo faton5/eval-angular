@@ -24,7 +24,7 @@
 
     <label>
       Échéance
-      <input name="dateEcheance" type="date" [min]="dateDuJour()" [(ngModel)]="dateEcheance">
+      <input name="dateEcheance" type="date" lang="fr-FR" [min]="dateDuJour()" [(ngModel)]="dateEcheance">
     </label>
     @if (erreurDate) {
       <small class="error">{{ erreurDate }}</small>
@@ -81,7 +81,7 @@
           <form class="edit-form" (ngSubmit)="enregistrer(tache)">
             <input name="titreModifie" [(ngModel)]="tache.titre">
             <textarea name="descriptionModifiee" [(ngModel)]="tache.description"></textarea>
-            <input name="dateModifiee" type="date" [min]="dateDuJour()" [(ngModel)]="tache.dateEcheance">
+            <input name="dateModifiee" type="date" lang="fr-FR" [min]="dateDuJour()" [(ngModel)]="tache.dateEcheance">
 
             <div class="actions">
               <button class="primary">Enregistrer</button>
